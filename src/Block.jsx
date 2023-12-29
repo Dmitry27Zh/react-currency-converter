@@ -1,10 +1,12 @@
+const defaultCurrencies = ['USD', 'EUR', 'GBP', 'RUB']
+
 const block = () => {
   return (
     <div className="block">
       <ul className="currencies">
-        <li className="active">USD</li>
-        <li>EUR</li>
-        <li>RUB</li>
+        {defaultCurrencies.map((cur) => (
+          <li key={cur}>{cur}</li>
+        ))}
         <li>
           <svg height="50px" viewBox="0 0 50 50" width="50px">
             <rect fill="none" height="50" width="50" />
