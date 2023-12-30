@@ -1,6 +1,6 @@
 const defaultCurrencies = ['USD', 'EUR', 'GBP', 'RUB']
 
-const block = ({ currency, onCurrencyChange }) => {
+const block = ({ currency, onCurrencyChange, value, onValueChange }) => {
   return (
     <div className="block">
       <ul className="currencies">
@@ -16,7 +16,7 @@ const block = ({ currency, onCurrencyChange }) => {
           </svg>
         </li>
       </ul>
-      <input type="number" placeholder={0} />
+      <input type="number" placeholder={0} value={value} onChange={onValueChange} />
     </div>
   )
 }
