@@ -7,8 +7,8 @@ import { convert } from './utils/convert'
 function App() {
   const [currencyFrom, setCurrencyFrom] = useState('USD')
   const [currencyTo, setCurrencyTo] = useState('EUR')
-  const [valueFrom, setValueFrom] = useState('0')
-  const [valueTo, setValueTo] = useState('0')
+  const [valueFrom, setValueFrom] = useState(0)
+  const [valueTo, setValueTo] = useState(1)
   const [rates, setRates] = useState({})
   useEffect(() => {
     api
@@ -19,14 +19,26 @@ function App() {
         alert('Error')
       })
   }, [])
-  const handleValueFromChange = (e) => {
-    setValueFrom(e.target.value)
-    setValueTo(convert(Number(e.target.value), currencyFrom, currencyTo, rates))
+  const handleValueFromChange = (value) => {
+    setValueFrom(value)
+
+    if (isFinite(value)) {
+      setValueTo(convert(Number(value), currencyFrom, currencyTo, rates))
+    }
   }
-  const handleValueToChange = (e) => {
-    setValueTo(e.target.value)
-    setValueFrom(convert(Number(e.target.value), currencyFrom, currencyTo, rates))
+  const handleValueToChange = (value) => {
+    setValueTo(value)
+
+    if (isFinite(value)) {
+      setValueFrom(convert(Number(value), currencyTo, currencyFrom, rates))
+    }
   }
+  useEffect(() => {
+    handleValueFromChange(valueFrom)
+  }, [currencyFrom])
+  useEffect(() => {
+    handleValueToChange(valueTo)
+  }, [currencyTo])
 
   return (
     <div className="App">
@@ -34,13 +46,13 @@ function App() {
         currency={currencyFrom}
         onCurrencyChange={setCurrencyFrom}
         value={valueFrom}
-        onValueChange={handleValueFromChange}
+        onValueChange={(e) => handleValueFromChange(e.target.value)}
       />
       <Block
         currency={currencyTo}
         onCurrencyChange={setCurrencyTo}
         value={valueTo}
-        onValueChange={handleValueToChange}
+        onValueChange={(e) => handleValueToChange(e.target.value)}
       />
     </div>
   )

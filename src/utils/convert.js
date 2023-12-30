@@ -1,7 +1,12 @@
 export function convert(value, currencyFrom, currencyTo, rates) {
-  const factor = rates[currencyFrom] ?? 1
-  const price = value / factor
-  const result = price * rates[currencyTo]
+  if (currencyFrom === currencyTo) {
+    return value
+  }
+
+  const factorA = rates[currencyFrom] ?? 1
+  const price = value / factorA
+  const factorB = rates[currencyTo] ?? 1
+  const result = price * factorB
 
   return result
 }
