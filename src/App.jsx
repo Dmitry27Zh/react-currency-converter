@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import api from './api/fake/currency'
 import './App.css'
 import Block from './Block'
+import { convert } from './utils/convert'
 
 function App() {
   const [currencyFrom, setCurrencyFrom] = useState('USD')
@@ -18,6 +19,10 @@ function App() {
         alert('Error')
       })
   }, [])
+  const handleValueFromChange = (e) => {
+    setValueFrom(e.target.value)
+    setValueTo(convert(Number(e.target.value), currencyFrom, currencyTo, rates))
+  }
 
   return (
     <div className="App">
@@ -25,7 +30,7 @@ function App() {
         currency={currencyFrom}
         onCurrencyChange={setCurrencyFrom}
         value={valueFrom}
-        onValueChange={(e) => setValueFrom(e.target.value)}
+        onValueChange={handleValueFromChange}
       />
       <Block
         currency={currencyTo}
