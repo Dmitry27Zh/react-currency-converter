@@ -8,12 +8,14 @@ function App() {
   const [currencyFrom, setCurrencyFrom] = useState('USD')
   const [currencyTo, setCurrencyTo] = useState('EUR')
   const [valueFrom, setValueFrom] = useState(0)
-  const [valueTo, setValueTo] = useState(1)
+  const [valueTo, setValueTo] = useState(0)
   const [rates, setRates] = useState({})
   useEffect(() => {
     api
       .fetch()
-      .then((data) => setRates(data.rates))
+      .then((data) => {
+        setRates(data.rates)
+      })
       .catch((e) => {
         console.warn(e)
         alert('Error')
@@ -23,14 +25,14 @@ function App() {
     setValueFrom(value)
 
     if (isFinite(value)) {
-      setValueTo(convert(Number(value), currencyFrom, currencyTo, rates))
+      setValueTo(convert(Number(value), currencyFrom, currencyTo, rates).toFixed(3))
     }
   }
   const handleValueToChange = (value) => {
     setValueTo(value)
 
     if (isFinite(value)) {
-      setValueFrom(convert(Number(value), currencyTo, currencyFrom, rates))
+      setValueFrom(convert(Number(value), currencyTo, currencyFrom, rates).toFixed(3))
     }
   }
   useEffect(() => {
