@@ -23,6 +23,10 @@ function App() {
     setValueFrom(e.target.value)
     setValueTo(convert(Number(e.target.value), currencyFrom, currencyTo, rates))
   }
+  const handleValueToChange = (e) => {
+    setValueTo(e.target.value)
+    setValueFrom(convert(Number(e.target.value), currencyFrom, currencyTo, rates))
+  }
 
   return (
     <div className="App">
@@ -36,7 +40,7 @@ function App() {
         currency={currencyTo}
         onCurrencyChange={setCurrencyTo}
         value={valueTo}
-        onValueChange={(e) => setValueTo(e.target.value)}
+        onValueChange={handleValueToChange}
       />
     </div>
   )
