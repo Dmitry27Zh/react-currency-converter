@@ -1,11 +1,13 @@
 const defaultCurrencies = ['USD', 'EUR', 'GBP', 'RUB']
 
-const block = () => {
+const block = ({ currency, onCurrencyChange }) => {
   return (
     <div className="block">
       <ul className="currencies">
         {defaultCurrencies.map((cur) => (
-          <li key={cur}>{cur}</li>
+          <li className={currency === cur ? 'active' : ''} key={cur} onClick={() => onCurrencyChange(cur)}>
+            {cur}
+          </li>
         ))}
         <li>
           <svg height="50px" viewBox="0 0 50 50" width="50px">
